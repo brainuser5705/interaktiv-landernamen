@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.min.js"></script>
+        <script>
+
+            function getCounts(){
+
+                return new Promise((resolve) => {
+                    
+                    dfd.readCSV("happiness_index.csv")
+                        .then(df => {
+
+                            //do something like display descriptive statistics
+                            let values = df.column("Ladder score").values;
+                            let bins = new Array(10).fill(0);
+
+                            let binIndex = bins.length-1;
+                            let minV = 9.0, maxV = 10.0;
+
+                            let valueIndex = 0;
+
+                            while (valueIndex < values.length){
+                                let v = values[valueIndex];
+                                if (v >= minV && v < maxV){
+                                    (bins[binIndex])++;
+                                    valueIndex++;
+                                }else{
+                                    binIndex--;
+                                    minV -= 1.0;
+                                    maxV -= 1.0;
+                                }
+                            }
+
+                            console.log(bins);
+
+                            resolve(bins);
+
+                        })
+                        .catch(err => {
+                            reject(err);
+                        })
+
+            });
+        }
+
+        async function makeBarChart(){
+
+            var group = d3.select("#bar-chart")
+                            .append("g")
+                            .attr("transform", "translate(50, 50)");
+
+            var groupTranslate = 30;
+
+            var bins = await getCounts();
+
+            var scY = d3.scaleLinear()
+                .domain([0, d3.max(bins) + 10])
+                .range([0, 300]);
+
+            //var maxScore = d3.max(data, d=>d["Ladder score"]);
+
+            group.append("g")
+                .attr("transform", "translate(" + groupTranslate + ",0)")
+                .selectAll("rect")
+                .data(bins).enter()
+                .append("rect")
+                .attr("fill", "red")
+                .attr("width", 40).attr("height", (d,i)=>scY(bins[i]))
+                .attr("x", (d,i)=>40*i)
+                .attr("y", (d,i)=>300-scY(bins[i]));
+
+            var axY = d3.scaleLinear()
+                        .domain([0, d3.max(bins) + 10])
+                        .range([300, 0])
+                        .nice();
+
+            group.append("g")
+                .attr("transform", "translate(" + groupTranslate + ",0)")
+                .call(d3.axisLeft(axY).ticks(10));
+
+            var axX = d3.scaleLinear()
+                .domain([0, 10])
+                .range([0, 400])
+                .nice();
+
+            group.append("g")
+                .attr("transform", "translate(" + groupTranslate + ",300)")
+                .call(d3.axisBottom(axX).ticks(10));
+
+        }
+
+        </script>
+    </head>
+    <body onload="makeBarChart()">
+        <h1>Bar Chart</h1>
+        <svg id="bar-chart" width="1000" height="1000" style="background: lightgrey">
+
+        </svg>
+    </body>
+</html>
