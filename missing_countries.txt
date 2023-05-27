@@ -1,0 +1,46 @@
+N. Mariana Is. 127.0.0.1:8080:41:45
+U.S. Virgin Is. 127.0.0.1:8080:41:45
+Guam 127.0.0.1:8080:41:45
+American Samoa 127.0.0.1:8080:41:45
+Puerto Rico 127.0.0.1:8080:41:45
+S. Geo. and the Is. 127.0.0.1:8080:41:45
+Br. Indian Ocean Ter. 127.0.0.1:8080:41:45
+Saint Helena 127.0.0.1:8080:41:45
+Pitcairn Is. 127.0.0.1:8080:41:45
+Anguilla 127.0.0.1:8080:41:45
+Falkland Is. 127.0.0.1:8080:41:45
+Cayman Is. 127.0.0.1:8080:41:45
+Bermuda 127.0.0.1:8080:41:45
+British Virgin Is. 127.0.0.1:8080:41:45
+Turks and Caicos Is. 127.0.0.1:8080:41:45
+Montserrat 127.0.0.1:8080:41:45
+Jersey 127.0.0.1:8080:41:45
+Guernsey 127.0.0.1:8080:41:45
+Isle of Man 127.0.0.1:8080:41:45
+Somaliland 127.0.0.1:8080:41:45
+Niue 127.0.0.1:8080:41:45
+Aruba 127.0.0.1:8080:41:45
+Curaçao 127.0.0.1:8080:41:45
+W. Sahara 127.0.0.1:8080:41:45
+Macedonia 127.0.0.1:8080:41:45
+Kosovo 127.0.0.1:8080:41:45
+Palestine 127.0.0.1:8080:41:45
+St. Pierre and Miquelon 127.0.0.1:8080:41:45
+Wallis and Futuna Is. 127.0.0.1:8080:41:45
+St-Martin 127.0.0.1:8080:41:45
+St-Barthélemy 127.0.0.1:8080:41:45
+Fr. Polynesia 127.0.0.1:8080:41:45
+New Caledonia 127.0.0.1:8080:41:45
+Fr. S. Antarctic Lands 127.0.0.1:8080:41:45
+Åland 127.0.0.1:8080:41:45
+Greenland 127.0.0.1:8080:41:45
+Faeroe Is. 127.0.0.1:8080:41:45
+N. Cyprus 127.0.0.1:8080:41:45
+Macao 127.0.0.1:8080:41:45
+Hong Kong 127.0.0.1:8080:41:45
+Indian Ocean Ter. 127.0.0.1:8080:41:45
+Heard I. and McDonald Is. 127.0.0.1:8080:41:45
+Norfolk Island 127.0.0.1:8080:41:45
+Siachen Glacier 127.0.0.1:8080:41:45
+Antarctica 127.0.0.1:8080:41:45
+Sint Maarten

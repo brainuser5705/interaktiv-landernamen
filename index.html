@@ -3,100 +3,63 @@
     <head>
         <meta charset="utf-8">
         <script src="https://d3js.org/d3.v5.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.min.js"></script>
+        <script src="https://unpkg.com/topojson@3"></script>
         <script>
 
-            function getCounts(){
+            async function main(){
+                var svg = d3.select("#map");
+                var g = svg.append("g")
+                    .attr("transform", "translate(0, 100)");
 
-                return new Promise((resolve) => {
-                    
-                    dfd.readCSV("happiness_index.csv")
-                        .then(df => {
+                var projection = d3.geoMercator()
+                    .scale(100);
 
-                            //do something like display descriptive statistics
-                            let values = df.column("Ladder score").values;
-                            let bins = new Array(10).fill(0);
+                var map = {}
 
-                            let binIndex = bins.length-1;
-                            let minV = 9.0, maxV = 10.0;
+                d3.csv("landernamen.csv")
+                    .then((countries) => {
+                        countries.forEach((c)=>map[c.iso]=c.name);
+                    });
 
-                            let valueIndex = 0;
+                d3.json("countries-50m.json")
+                    .then((world) => {
 
-                            while (valueIndex < values.length){
-                                let v = values[valueIndex];
-                                if (v >= minV && v < maxV){
-                                    (bins[binIndex])++;
-                                    valueIndex++;
-                                }else{
-                                    binIndex--;
-                                    minV -= 1.0;
-                                    maxV -= 1.0;
-                                }
-                            }
+                        console.log(world);
 
-                            console.log(bins);
+                        path = d3.geoPath().projection(projection);
 
-                            resolve(bins);
+                        g.selectAll("path")
+                            .data(topojson.feature(world, world.objects.countries).features)
+                            .enter()
+                            .append("path")
+                            .attr("d", path)
+                            .attr("stroke", "black")
+                            .attr("fill", "white")
+                            // .each((d, i, ns)=>{
+                            //     if (!map[d.id]){
+                            //         d3.select(ns[i]).attr("fill","lightblue");
+                            //         console.log(d.properties.name);
+                            //     };
+                            // })
+                            .on("click", (d)=>{
+                                // console.log(d.properties.name);
+                                console.log(map[d.id]);
+                            })
+                            .on("mouseover", (d,i,ns) =>{
+                                d3.select(ns[i]).attr("fill", "pink");
+                            })
+                            .on("mouseout", (d,i,ns)=>{
+                                d3.select(ns[i]).attr("fill", "white");
+                            });
 
-                        })
-                        .catch(err => {
-                            reject(err);
-                        })
-
-            });
-        }
-
-        async function makeBarChart(){
-
-            var group = d3.select("#bar-chart")
-                            .append("g")
-                            .attr("transform", "translate(50, 50)");
-
-            var groupTranslate = 30;
-
-            var bins = await getCounts();
-
-            var scY = d3.scaleLinear()
-                .domain([0, d3.max(bins) + 10])
-                .range([0, 300]);
-
-            //var maxScore = d3.max(data, d=>d["Ladder score"]);
-
-            group.append("g")
-                .attr("transform", "translate(" + groupTranslate + ",0)")
-                .selectAll("rect")
-                .data(bins).enter()
-                .append("rect")
-                .attr("fill", "red")
-                .attr("width", 40).attr("height", (d,i)=>scY(bins[i]))
-                .attr("x", (d,i)=>40*i)
-                .attr("y", (d,i)=>300-scY(bins[i]));
-
-            var axY = d3.scaleLinear()
-                        .domain([0, d3.max(bins) + 10])
-                        .range([300, 0])
-                        .nice();
-
-            group.append("g")
-                .attr("transform", "translate(" + groupTranslate + ",0)")
-                .call(d3.axisLeft(axY).ticks(10));
-
-            var axX = d3.scaleLinear()
-                .domain([0, 10])
-                .range([0, 400])
-                .nice();
-
-            group.append("g")
-                .attr("transform", "translate(" + groupTranslate + ",300)")
-                .call(d3.axisBottom(axX).ticks(10));
-
-        }
+                    });
+            }
 
         </script>
     </head>
-    <body onload="makeBarChart()">
-        <h1>Bar Chart</h1>
-        <svg id="bar-chart" width="1000" height="1000" style="background: lightgrey">
+    <body onload="main()">
+        <h1>Interaktiv Landernamen</h1>
+        <svg id="map" width="1000" height="1000" style="background: lightgrey">
 
         </svg>
     </body>
