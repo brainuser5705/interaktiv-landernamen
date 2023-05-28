@@ -31,8 +31,10 @@ with open('landernamen.csv','w', newline="") as csvfile:
         # determine gender based on definite article
         gender = "n"
         if vollform.startswith("Der "):
+            vollform = vollform[4:]
             gender = "m"
         elif vollform.startswith("Die "):
+            vollform = vollform[4:]
             gender = "f"      
         
         print(f'writing: {iso}, {kurz}, {vollform}, {gender}')

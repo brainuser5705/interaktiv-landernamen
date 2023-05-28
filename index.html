@@ -67,13 +67,39 @@
                                 console.log(map[d.id]);
                             })
                             .on("mouseover", (d,i,ns) =>{
+                                let c = map[d.id];
                                 d3.select(ns[i]).attr("fill", "gray");
+                                
+                                let name = "Country is not found in data";
+                                let gender = "Country is not found in data";
+
+                                if (c != undefined){
+                                    switch(c.gender){
+                                        case "m":
+                                            name = "der " + c.vollform;
+                                            gender = "Masculine";
+                                            break;
+                                        case "n":
+                                            name = c.vollform;
+                                            gender = "Neuter";
+                                            break;
+                                        case "f":
+                                            name = "die " + c.vollform;
+                                            gender = "Feminine";
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+
+                                d3.select("#country-name").text(name);
+                                d3.select("#country-gender").text(gender);
                             })
                             .on("mouseout", (d,i,ns)=>{
                                 d3.select(ns[i]).attr("fill", d=>getGenderColor(map[d.id]));
                             });
 
-                    });ffff
+                    });
 
                     var zoom = d3.zoom()
                         .scaleExtent([1,20])
@@ -89,8 +115,11 @@
     </head>
     <body onload="main()">
         <h1>Interaktiv Landernamen</h1>
+        <div id="info-box">
+            <label>Country name: </label> <span id="country-name"></span> <br>
+            <label>Grammatical gender: </label> <span id="country-gender"></span>
+        </div>
         <svg id="map" width="1000" height="700" style="background: lightgrey">
-
         </svg>
     </body>
 </html>
