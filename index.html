@@ -34,7 +34,7 @@
                     .attr("transform", "translate(0, 100)");
 
                 var projection = d3.geoMercator()
-                    .scale(100);
+                    .scale(120);
 
                 var map = {}
 
@@ -119,7 +119,7 @@
             <label>Country name: </label> <span id="country-name"></span> <br>
             <label>Grammatical gender: </label> <span id="country-gender"></span>
         </div>
-        <svg id="map" width="1000" height="700" style="background: lightgrey">
+        <svg id="map" width="1000" height="700" style="border: 3px solid black;">
         </svg>
     </body>
 </html>
