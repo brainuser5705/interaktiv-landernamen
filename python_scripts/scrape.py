@@ -11,7 +11,7 @@ table = soup.find(id="SheetContentPlaceHolder_GridView1")
 rows = table.find_all("tr")
 
 with open('landernamen.csv','w', newline="") as csvfile:
-    fieldnames = ["iso","name"]
+    fieldnames = ["iso", "kurz", "vollform", "gender"]
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=',')
 
     writer.writeheader()
@@ -21,15 +21,25 @@ with open('landernamen.csv','w', newline="") as csvfile:
         # way too overly complex lambdas!!!
         data = list(
             map(lambda x : x[1], 
-                filter(lambda x : x[0] in [2,5], # only need these columns
+                filter(lambda x : x[0] in [1,2,5], # only need these columns
                     enumerate(r.find_all("td")))))
     
-        iso = data[1].text
-        name = data[0].text
+        kurz = data[0].text
+        vollform = data[1].text
+        iso = data[2].text
+
+        # determine gender based on definite article
+        gender = "n"
+        if vollform.startswith("Der "):
+            gender = "m"
+        elif vollform.startswith("Die "):
+            gender = "f"      
         
-        print("writing: ", iso, ",", name)
+        print(f'writing: {iso}, {kurz}, {vollform}, {gender}')
         writer.writerow({
             'iso':iso,
-            'name':name
+            'kurz':kurz,
+            'vollform':vollform,
+            'gender': gender
         })
 
