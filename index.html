@@ -11,16 +11,16 @@
 
                 switch(country.gender){
                     case "f":
-                        return "lightblue";
+                        return "lightyellow";
                         break;
                     case "m":
-                        return "lightpink";
+                        return "lightblue";
                         break;
                     case "n":
-                        return "plum";
+                        return "lightgreen";
                         break;
                     case "p":
-                        return "white";
+                        return "pink";
                         break;
                     default:
                         return "black";
@@ -29,7 +29,15 @@
             }
 
             async function main(){
-                var svg = d3.select("#map");
+
+                var width = 1000;
+                var height = 700;
+
+                var svg = d3.select("#map")
+                    .attr("width", width)
+                    .attr("height", height);
+                    //.attr("viewBox", [0,0,width, height]);
+                    
                 var g = svg.append("g")
                     .attr("transform", "translate(0, 100)");
 
@@ -48,27 +56,30 @@
 
                         path = d3.geoPath().projection(projection);
 
-                        g.selectAll("path")
+                        var display = g.selectAll("path")
                             .data(topojson.feature(world, world.objects.countries).features)
                             .enter()
                             .append("path")
                             .attr("d", path)
                             .attr("stroke", "black")
                             .attr("stroke-width", 0.3)
-                            .attr("fill", d=>getGenderColor(map[d.id]))
+                            .attr("fill", d=>getGenderColor(map[d.id]));
                             // .each((d, i, ns)=>{
                             //     if (!map[d.id]){
-                            //         d3.select(ns[i]).attr("fill","lightblue");
+                            //         d3.select(ns[i]).attr("fill","black");
                             //         console.log(d.properties.name);
                             //     };
                             // })
-                            .on("click", (d)=>{
+
+                        var div = d3.select("#tooltip");
+                            
+                        display.on("click", (d)=>{
                                 // console.log(d.properties.name);
                                 console.log(map[d.id]);
                             })
                             .on("mouseover", (d,i,ns) =>{
                                 let c = map[d.id];
-                                d3.select(ns[i]).attr("fill", "gray");
+                                d3.select(ns[i]).attr("opacity", 0.5);
                                 
                                 let name = "Country is not found in data";
                                 let gender = "Country is not found in data";
@@ -87,6 +98,9 @@
                                             name = "die " + c.vollform;
                                             gender = "Feminine";
                                             break;
+                                        case "p":
+                                            name = "die " + c.vollform;
+                                            gender = "Plural";
                                         default:
                                             break;
                                     }
@@ -94,14 +108,25 @@
 
                                 d3.select("#country-name").text(name);
                                 d3.select("#country-gender").text(gender);
+                                
+                                // changes the same div even without remove
+                                d3.select("body")
+                                    .append(()=>div.node())
+                                    .style("left", (d3.event.pageX + 20) + "px")
+                                    .style("top", (d3.event.pageY + 20) + "px");
+
+                                d3.select("#tooltip-name")
+                                    .text(name);
                             })
                             .on("mouseout", (d,i,ns)=>{
-                                d3.select(ns[i]).attr("fill", d=>getGenderColor(map[d.id]));
+                                d3.select(ns[i]).attr("opacity", 1);
+                                div.remove();
                             });
 
                     });
 
                     var zoom = d3.zoom()
+                        //.extent([0,0], [width, height])
                         .scaleExtent([1,20])
                         .on('zoom', doZoom); // need to set the bounds of translation
                     svg.call(zoom);
@@ -119,7 +144,10 @@
             <label>Country name: </label> <span id="country-name"></span> <br>
             <label>Grammatical gender: </label> <span id="country-gender"></span>
         </div>
-        <svg id="map" width="1000" height="700" style="border: 3px solid black;">
+        <svg id="map" style="border: 3px solid black;">
         </svg>
+        <div id="tooltip" style="position: absolute; background-color: lightgray; font-size: 10px; border: 1px solid; border-radius:8px">
+            <label>Country name: </label><span id ="tooltip-name"></span>
+        </div>
     </body>
 </html>

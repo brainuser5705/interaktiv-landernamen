@@ -123,7 +123,7 @@ iso,kurz,vollform,gender
 524,Nepal,Demokratische Bundesrepublik Nepal,f
 554,Neuseeland,Neuseeland,n
 558,Nicaragua,Republik Nicaragua,f
-528,Niederlande,Das Königreich der Niederlande,n
+528,Niederlande,Das Königreich der Niederlande,p
 562,Niger,Republik Niger,f
 566,Nigeria,Bundesrepublik Nigeria,f
 578,Norwegen,Das Königreich Norwegen,n
@@ -135,7 +135,7 @@ iso,kurz,vollform,gender
 598,Papua-Neuguinea,Unabhängige Staat Papua-Neuguinea,m
 600,Paraguay,Republik Paraguay,f
 604,Peru,Republik Peru,f
-608,Philippinen,Republik der Philippinen,f
+608,Philippinen,Republik der Philippinen,p
 616,Polen,Republik Polen,f
 620,Portugal,Portugiesische Republik,f
 646,Ruanda,Republik Ruanda,f
@@ -190,8 +190,8 @@ iso,kurz,vollform,gender
 548,Vanuatu,Republik Vanuatu,f
 336,Vatikanstadt,Staat Vatikanstadt,m
 862,Venezuela,Bolivarische Republik Venezuela,f
-784,Vereinigte Arabische Emirate,Vereinigten Arabischen Emirate,f
-840,Vereinigte Staaten,Vereinigten Staaten von Amerika,f
+784,Vereinigte Arabische Emirate,Vereinigten Arabischen Emirate,p
+840,Vereinigte Staaten,Vereinigten Staaten von Amerika,p
 704,Vietnam,Sozialistische Republik Vietnam,n
 140,Zentralafrikanische Republik,Zentralafrikanische Republik,f
 196,Zypern,Republik Zypern,f
