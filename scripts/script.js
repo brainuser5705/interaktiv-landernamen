@@ -10,6 +10,15 @@ const HEADING_HEIGHT = document.getElementsByTagName("header");
 
 const MISSING_COUNTRY_MSG = "Country is not in dataset.";
 
+const COLOR_MAP = {
+    "feminine": "lightyellow",
+    "masculine": "lightblue",
+    "neuter": "lightgreen",
+    "plural": "lightpink",
+    "no-gender": "red",
+    "no-country": "lightgray"
+};
+
 var toggleBool = true;
 var longMapVis = "visible", shortMapVis = "hidden";
 
@@ -22,18 +31,9 @@ function toggle(){
 }
 
 function getColor(gender){
-    switch(gender){
-        case "neuter":
-            return "lightgreen";
-        case "feminine":
-            return "lightyellow";
-        case "masculine":
-            return "lightblue";
-        case "plural":
-            return "lightpink";
-        default:
-            return "red";
-    }
+    color = COLOR_MAP[gender];
+    if (color == undefined) color = COLOR_MAP["no-gender"];
+    return color;
 }
 
 function createCountriesMap(form){
@@ -79,7 +79,7 @@ function createMap(group, countriesMap){
                     if (country) return country.color;
                     else {
                         // console.log(d.id)
-                        return "lightgray"
+                        return COLOR_MAP["no-country"];
                     };
                 })
                 .on("mousemove", (d,i,ns)=>{
@@ -104,6 +104,12 @@ function createMap(group, countriesMap){
 }
 
 function main(){
+
+    // set the color key
+    for (let [key, color] of Object.entries(COLOR_MAP)){
+        document.getElementById(key + "-color").style.backgroundColor = color;
+    }
+
     var svg = d3.select("#map")
         .attr("width", WIDTH)
         .attr("height", HEIGHT); // -(HEADING_HEIGHT[0]).clientHeight);

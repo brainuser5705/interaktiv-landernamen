@@ -15,6 +15,14 @@
                 </select>
             </div>
             <button onclick="toggle()">Click here for <span id="toggle"></span> form genders</button>
+            <div>
+                <canvas width="15px" height="15px" id="feminine-color"></canvas> Feminine
+                <canvas width="15px" height="15px" id="masculine-color"></canvas> Masculine
+                <canvas width="15px" height="15px" id="neuter-color"></canvas> Neuter
+                <canvas width="15px" height="15px" id="plural-color"></canvas> Plural
+                <canvas width="15px" height="15px" id="no-gender-color"></canvas> No gender data
+                <canvas width="15px" height="15px" id="no-country-color"></canvas> Country is not found.
+            </div>
         </header>
         <div id="info-box">
         </div>
@@ -28,7 +36,6 @@
             <div><i>Long: </i><span id="tooltip-long"></span></div>
             <div><i>Short: </i><span id="tooltip-short"></span></div>
         </div>
-
         <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="https://unpkg.com/topojson@3"></script>
         <script src="scripts/script.js"></script>
