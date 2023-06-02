@@ -102,32 +102,32 @@ function createMap(group, countriesMap){
                         .style("left", (d3.event.pageX + TOOLTIP_X) + "px")
                         .style("top", (d3.event.pageY + TOOLTIP_Y) + "px");
 
+
+                    long_text = MISSING_COUNTRY_MSG;
+                    short_text = MISSING_COUNTRY_MSG;
+
+                    if (country){
+                        long_text = country.long;
+                        short_text = country.short;
+
+                        var flag = flags[country["iso_a3"]];
+                        flag = flag ? "https://upload.wikimedia.org/wikipedia/" + flag : "";
+                        
+                    }
+
                     if(isChange){
 
                         d3.select("body")
                             .append(()=>infobox.node());
-                        
-                        long_text = MISSING_COUNTRY_MSG;
-                        short_text = MISSING_COUNTRY_MSG;
-
-                        if (country){
-                            long_text = country.long;
-                            short_text = country.short;
-
-                            flag = flags[country["iso_a3"]];
-                            if(flag) d3.select("#info-box-flag").attr("src", "https://upload.wikimedia.org/wikipedia/" + flag);
-
-                            d3.select("#info-box-long-gen").text(country.long_gender);
-                            d3.select("#info-box-short-gen").text(country.short_gender);
-                        }
-
+                    
                         d3.select("#info-box-long").text(long_text);
                         d3.select("#info-box-short").text(short_text);
-                        d3.select("#tooltip-long").text(long_text);
-                        d3.select("#tooltip-short").text(short_text);
-
+                        d3.select("#info-box-flag").attr("src", flag);
                         isChange = false;
                     }
+
+                    d3.select("#tooltip-long").text(long_text);
+                    d3.select("#tooltip-short").text(short_text);
                     
                 })
                 .on("mouseout", (d,i,ns)=>{
