@@ -20,13 +20,19 @@ const COLOR_MAP = {
 };
 
 var flags;
-
 fetch("/data/flag_svgs.json")
     .then((response)=>response.json())
     .then((json)=>{flags = json});
 
 var toggleBool = true;
 var longMapVis = "visible", shortMapVis = "hidden";
+
+var isSelected = false;
+var selectedCountry = 0; // dummy value
+var isChange = true;
+
+var tooltip = d3.select("#tooltip");
+var infobox = d3.select("#info-box");
 
 function toggle(){
     document.getElementById("toggle").innerHTML = toggleBool ? "short" : "long";
@@ -60,19 +66,55 @@ function createCountriesMap(form){
     return countriesMap;
 }
 
+function drawCountry(d, countriesMap){
+    country = countriesMap[d.id];
+
+    d3.select("body")
+        .append(()=>tooltip.node()) // appends need function returning a node
+        .style("left", (d3.event.pageX + TOOLTIP_X) + "px")
+        .style("top", (d3.event.pageY + TOOLTIP_Y) + "px");
+
+
+    long_text = MISSING_COUNTRY_MSG;
+    short_text = MISSING_COUNTRY_MSG;
+    long_gender = "";
+    short_gender = "";
+
+    if (country){
+        long_text = country.long;
+        short_text = country.short;
+        long_gender = country.long_gender;
+        short_gender = country.short_gender;
+
+        var flag = flags[country["iso_a3"]];
+        flag = flag ? "https://upload.wikimedia.org/wikipedia/" + flag : "";
+        
+    }
+
+    if(isChange){
+
+        d3.select("body")
+            .append(()=>infobox.node());
+    
+        d3.select("#info-box-long").text(long_text);
+        d3.select("#info-box-short").text(short_text);
+        d3.select("#info-box-long-gen").text(long_gender);
+        d3.select("#info-box-short-gen").text(short_gender);
+        d3.select("#info-box-flag").attr("src", flag);
+        
+        if (isSelected) isChange = false;
+    }
+
+    d3.select("#tooltip-long").text(long_text);
+    d3.select("#tooltip-short").text(short_text);
+}
+
 function createMap(group, countriesMap){
 
     var projection = d3.geoMercator()
         .scale(150);
 
     var path = d3.geoPath().projection(projection);
-
-    var isSelected = false;
-    var selectedCountry = 0; // dummy value
-    var isChange = true;
-
-    var tooltip = d3.select("#tooltip");
-    var infobox = d3.select("#info-box")
 
     d3.json("data/countries-50m.json")
         .then((world)=>{
@@ -94,42 +136,7 @@ function createMap(group, countriesMap){
                     };
                 })
                 .on("mousemove", (d,i,ns)=>{
-
-                    country = countriesMap[d.id];
-
-                    d3.select("body")
-                        .append(()=>tooltip.node()) // appends need function returning a node
-                        .style("left", (d3.event.pageX + TOOLTIP_X) + "px")
-                        .style("top", (d3.event.pageY + TOOLTIP_Y) + "px");
-
-
-                    long_text = MISSING_COUNTRY_MSG;
-                    short_text = MISSING_COUNTRY_MSG;
-
-                    if (country){
-                        long_text = country.long;
-                        short_text = country.short;
-
-                        var flag = flags[country["iso_a3"]];
-                        flag = flag ? "https://upload.wikimedia.org/wikipedia/" + flag : "";
-                        
-                    }
-
-                    if(isChange){
-
-                        d3.select("body")
-                            .append(()=>infobox.node());
-                    
-                        d3.select("#info-box-long").text(long_text);
-                        d3.select("#info-box-short").text(short_text);
-                        d3.select("#info-box-flag").attr("src", flag);
-                        
-                        if (isSelected) isChange = false;
-                    }
-
-                    d3.select("#tooltip-long").text(long_text);
-                    d3.select("#tooltip-short").text(short_text);
-                    
+                    drawCountry(d, countriesMap);
                 })
                 .on("mouseout", (d,i,ns)=>{
                     if (!isSelected) infobox.remove();
@@ -151,9 +158,8 @@ function createMap(group, countriesMap){
                             .attr("filter", "url(#softGlow)");
                         isSelected = true;
                     }
-
                     isChange = true;
-
+                    drawCountry(d, countriesMap);
                 })
         });
 
