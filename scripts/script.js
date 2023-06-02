@@ -123,7 +123,8 @@ function createMap(group, countriesMap){
                         d3.select("#info-box-long").text(long_text);
                         d3.select("#info-box-short").text(short_text);
                         d3.select("#info-box-flag").attr("src", flag);
-                        isChange = false;
+                        
+                        if (isSelected) isChange = false;
                     }
 
                     d3.select("#tooltip-long").text(long_text);
@@ -136,13 +137,11 @@ function createMap(group, countriesMap){
                 })
                 .on("click", (d,i,ns)=>{
 
-                    isChange = true;
-
                     if (isSelected && d.id == selectedCountry){
-                        isSelected = false;
                         d3.select("#selected-country")
                             .attr("stroke", "none")
-                            .attr("filter", null);     
+                            .attr("filter", null);
+                        isSelected = false;     
                     }else if (d != selectedCountry){
                         selectedCountry = d.id;
                         d3.select("#selected-country")
@@ -152,6 +151,8 @@ function createMap(group, countriesMap){
                             .attr("filter", "url(#softGlow)");
                         isSelected = true;
                     }
+
+                    isChange = true;
 
                 })
         });
