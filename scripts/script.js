@@ -11,13 +11,15 @@ const HEADING_HEIGHT = document.getElementsByTagName("header");
 const MISSING_COUNTRY_MSG = "Country is not in dataset.";
 
 const COLOR_MAP = {
-    "feminine": "lightyellow",
-    "masculine": "lightblue",
-    "neuter": "lightgreen",
-    "plural": "lightpink",
-    "no-gender": "red",
-    "no-country": "lightgray"
+    "feminine": "#ebdc71",
+    "masculine": "#ad58d1",
+    "neuter": "#f22259",
+    "plural": "#3fff38",
+    "no-gender": "#8f8f8f",
+    "no-country": "#030303"
 };
+
+const ALPHA = "B3";
 
 var flags;
 fetch("/data/flag_svgs.json")
@@ -66,7 +68,7 @@ function createCountriesMap(form){
     return countriesMap;
 }
 
-function drawCountry(d, countriesMap){
+function drawInfoBox(d, countriesMap){
     country = countriesMap[d.id];
 
     d3.select("body")
@@ -82,6 +84,7 @@ function drawCountry(d, countriesMap){
     capital = "";
     national_m = "";
     national_f = "";
+    color = COLOR_MAP["no-country"];
 
     if (country){
 
@@ -106,13 +109,16 @@ function drawCountry(d, countriesMap){
 
         var flag = flags[country["iso_a3"]];
         flag = flag ? "https://upload.wikimedia.org/wikipedia/" + flag : "";
-        
+
+        color = country.color;
     }
 
     if(isChange){
 
         d3.select("body")
             .append(()=>infobox.node());
+
+        infobox.node().style.backgroundColor = color + ALPHA;
     
         d3.select("#info-box-iso").text(iso);
         d3.select("#info-box-iso-a2").text(iso_a2);
@@ -150,8 +156,8 @@ function createMap(group, countriesMap){
                 .append("path")
                 .attr("d", path)
                 .attr("stroke", "black")
-                .attr("stroke-width", 0.3) // see if this can change dynamically with zoom
-                // .attr("vector-effect", "non-scaling-stroke")
+                .attr("stroke-width", 0.5)
+                .attr("vector-effect", "non-scaling-stroke")
                 .attr("fill", d=>{
                     country = countriesMap[d.id];
                     if (country) return country.color;
@@ -161,7 +167,7 @@ function createMap(group, countriesMap){
                     };
                 })
                 .on("mousemove", (d,i,ns)=>{
-                    drawCountry(d, countriesMap);
+                    drawInfoBox(d, countriesMap);
                 })
                 .on("mouseout", (d,i,ns)=>{
                     if (!isSelected) infobox.remove();
@@ -179,12 +185,13 @@ function createMap(group, countriesMap){
                         d3.select("#selected-country")
                             .attr("fill", "none") // required so actual vector can be clicked on
                             .attr("stroke", "black")
+                            .attr("stroke-width", 0.5)
                             .attr("d", (ns[i]).getAttribute("d"))
                             .attr("filter", "url(#softGlow)");
                         isSelected = true;
                     }
                     isChange = true;
-                    drawCountry(d, countriesMap);
+                    drawInfoBox(d, countriesMap);
                 })
         });
 
@@ -216,6 +223,6 @@ function main(){
     svg.call(zoom);
 
     // initial transformation for zoom
-    svg.call(zoom.transform, d3.zoomIdentity.translate(WIDTH *.3, 200));
+    svg.call(zoom.transform, d3.zoomIdentity.translate(WIDTH *.2, 200));
 
 }
