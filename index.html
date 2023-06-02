@@ -2,7 +2,8 @@
 
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="functional.css">
+        <link rel="stylesheet" href="styles/functional.css">
+        <link rel="stylesheet" href="styles/style.css">
     </head>
 
     <body style="margin: 0px;">
@@ -13,15 +14,19 @@
                     <option value="de">German (de)</option>
                 </select>
             </div>
+            <button onclick="toggle()">Click here for <span id="toggle"></span> form genders</button>
         </header>
         <div id="info-box">
         </div>
         <div>
             <svg id="map">
+                <g id="long-map"></g>
+                <g id="short-map"></g>
             </svg>
         </div>
         <div id="tooltip">
-            <div id="tooltip-name"></div>
+            <div><i>Long: </i><span id="tooltip-long"></span></div>
+            <div><i>Short: </i><span id="tooltip-short"></span></div>
         </div>
 
         <script src="https://d3js.org/d3.v5.min.js"></script>
