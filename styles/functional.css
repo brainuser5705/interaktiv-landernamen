@@ -1,9 +1,19 @@
+header{
+    position: absolute;
+}
+
 #tooltip{
     position: absolute;
     border: 1px solid;
     padding: 0.5em;
 }
 
+html, body, #map-div{
+    height: 100%;
+    margin: 0%;
+}
+
 #map{
-    border: 2px solid;
+    width: 100%;
+    height: 99%;
 }

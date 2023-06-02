@@ -1,7 +1,7 @@
 window.addEventListener("load", main);
 
-const WIDTH = 1500; // window.outerWidth;
-const HEIGHT = 700; // window.outerHeight;
+const WIDTH = window.outerWidth;
+const HEIGHT = window.outerHeight;
 
 const TOOLTIP_X = 20;
 const TOOLTIP_Y = 20;
@@ -32,7 +32,9 @@ function toggle(){
 
 function getColor(gender){
     color = COLOR_MAP[gender];
-    if (color == undefined) color = COLOR_MAP["no-gender"];
+    if (!color){
+        color = COLOR_MAP["no-gender"];
+    }
     return color;
 }
 
@@ -55,14 +57,12 @@ function createCountriesMap(form){
 function createMap(group, countriesMap){
 
     var projection = d3.geoMercator()
-        .scale(120);
+        .scale(150);
 
     var path = d3.geoPath().projection(projection);
 
     d3.json("data/countries-50m.json")
         .then((world)=>{
-
-            // group.attr("transform", "translate(0," + HEADING_HEIGHT + ")");
 
             var tooltip = d3.select("#tooltip");
 
@@ -111,8 +111,8 @@ function main(){
     }
 
     var svg = d3.select("#map")
-        .attr("width", WIDTH)
-        .attr("height", HEIGHT); // -(HEADING_HEIGHT[0]).clientHeight);
+        //.attr("width", WIDTH[0].clientWidth)
+        //.attr("height", HEIGHT); // -(HEADING_HEIGHT[0]).clientHeight);
 
     var longMapGroup = d3.select("#long-map").call(createMap, createCountriesMap("long"));
     var shortMapGroup = d3.select("#short-map").call(createMap, createCountriesMap("short"));
@@ -121,9 +121,12 @@ function main(){
     var zoom = d3.zoom()
         .scaleExtent([1,20])
         .on("zoom", ()=>{
-            longMapGroup.attr("transform", d3.event.transform)
-            shortMapGroup.attr("transform", d3.event.transform)
+            longMapGroup.attr("transform", d3.event.transform);
+            shortMapGroup.attr("transform", d3.event.transform);
         });
     svg.call(zoom);
+
+    longMapGroup.attr("transform", "translate(" + (WIDTH * .3) / 2+ ", 200)");
+    shortMapGroup.attr("transform", "translate(" + (WIDTH * .3) / 2+ ", 200)");
 
 }
