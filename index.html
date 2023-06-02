@@ -29,13 +29,29 @@
                 <img id="info-box-flag" width="200px"/>
             </div>
             <div>
+                <div id="info-box-iso"></div>
+                <div id="info-box-iso-a2"></div>
+                <div id="info-box-iso-a3"></div>
+            </div>
+            <div>
                 <b>Official long form: </b><span id="info-box-long"></span> 
                 (<i><span id="info-box-long-gen"></span></i>)</div>
             <div>
                 <b>Official short form: </b><span id="info-box-short"></span>
-                (<i><span id="info-box-short-gen"></span></i>)</div>
+                (<i><span id="info-box-short-gen"></span></i>)
+            </div>
+            <div>
+                <b>Capital: </b><span id="info-box-capital"></span>
+            </div>
+            <div>
+                <b>Nationals: </b>
+                    <ul>
+                        <li><i>Masculine:</i> <span id="info-box-nat-m"></span></li>
+                        <li><i>Feminine:</i> <span id="info-box-nat-f"></span></li>
+                    </ul>
             </div>
         </div>
+            
         <div id="map-div">
             <svg id="map">
 
@@ -70,6 +86,11 @@
                 </g>
             </svg>
         </div>
+
+        <div id="about-section">
+            Created by Ashley Liew
+        </div>
+
         <div id="tooltip">
             <div><i>Long: </i><span id="tooltip-long"></span></div>
             <div><i>Short: </i><span id="tooltip-short"></span></div>

@@ -79,12 +79,30 @@ function drawCountry(d, countriesMap){
     short_text = MISSING_COUNTRY_MSG;
     long_gender = "";
     short_gender = "";
+    capital = "";
+    national_m = "";
+    national_f = "";
 
     if (country){
+
+        var iso = country.iso;
+        var iso_a2 = country.iso_a2;
+        var iso_a3 = country.iso_a3;
+
         long_text = country.long;
         short_text = country.short;
         long_gender = country.long_gender;
         short_gender = country.short_gender;
+
+        if (long_gender == "feminine" || long_gender == "plural"){
+            long_text = "die " + long_text;
+        } else if (long_gender == "masculine"){
+            long_text = "der " + long_text;
+        }
+
+        capital = country.capital;
+        national_m = country.national_m;
+        national_f = country.national_f;
 
         var flag = flags[country["iso_a3"]];
         flag = flag ? "https://upload.wikimedia.org/wikipedia/" + flag : "";
@@ -96,10 +114,17 @@ function drawCountry(d, countriesMap){
         d3.select("body")
             .append(()=>infobox.node());
     
+        d3.select("#info-box-iso").text(iso);
+        d3.select("#info-box-iso-a2").text(iso_a2);
+        d3.select("#info-box-iso-a3").text(iso_a3);
+
         d3.select("#info-box-long").text(long_text);
         d3.select("#info-box-short").text(short_text);
         d3.select("#info-box-long-gen").text(long_gender);
         d3.select("#info-box-short-gen").text(short_gender);
+        d3.select("#info-box-capital").text(capital);
+        d3.select("#info-box-nat-m").text(national_m);
+        d3.select("#info-box-nat-f").text(national_f);
         d3.select("#info-box-flag").attr("src", flag);
         
         if (isSelected) isChange = false;
