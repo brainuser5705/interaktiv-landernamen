@@ -19,6 +19,12 @@ const COLOR_MAP = {
     "no-country": "lightgray"
 };
 
+var flags;
+
+fetch("/data/flag_svgs.json")
+    .then((response)=>response.json())
+    .then((json)=>{flags = json});
+
 var toggleBool = true;
 var longMapVis = "visible", shortMapVis = "hidden";
 
@@ -89,11 +95,20 @@ function createMap(group, countriesMap){
                         .style("left", (d3.event.pageX + TOOLTIP_X) + "px")
                         .style("top", (d3.event.pageY + TOOLTIP_Y) + "px");
                     
-                    long_text = country ? country.long : MISSING_COUNTRY_MSG;
-                    short_text = country ? country.short : MISSING_COUNTRY_MSG;
+                    long_text = MISSING_COUNTRY_MSG;
+                    short_text = MISSING_COUNTRY_MSG;
+
+                    if (country){
+                        long_text = country.long;
+                        short_text = country.short;
+
+                        flag = flags[country["iso_a3"]];
+                        if(flag) d3.select("#info-box-flag").attr("src", "https://upload.wikimedia.org/wikipedia/" + flag);
+                    }
 
                     d3.select("#tooltip-long").text(long_text);
                     d3.select("#tooltip-short").text(short_text);
+
                     
                 })
                 .on("mouseout", (d,i,ns)=>{
@@ -105,7 +120,7 @@ function createMap(group, countriesMap){
 
 function main(){
 
-    // set the color key
+    // set the color key canvas elements
     for (let [key, color] of Object.entries(COLOR_MAP)){
         document.getElementById(key + "-color").style.backgroundColor = color;
     }
@@ -120,13 +135,14 @@ function main(){
 
     var zoom = d3.zoom()
         .scaleExtent([1,20])
+        // .translateExtent([[-WIDTH,-200],[WIDTH, 1000]])
         .on("zoom", ()=>{
             longMapGroup.attr("transform", d3.event.transform);
             shortMapGroup.attr("transform", d3.event.transform);
         });
     svg.call(zoom);
 
-    longMapGroup.attr("transform", "translate(" + (WIDTH * .3) / 2+ ", 200)");
-    shortMapGroup.attr("transform", "translate(" + (WIDTH * .3) / 2+ ", 200)");
+    // initial transformation for zoom
+    svg.call(zoom.transform, d3.zoomIdentity.translate(WIDTH *.3, 200));
 
 }
