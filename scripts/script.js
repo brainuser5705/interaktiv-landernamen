@@ -67,10 +67,15 @@ function createMap(group, countriesMap){
 
     var path = d3.geoPath().projection(projection);
 
+    var isSelected = false;
+    var selectedCountry = 0; // dummy value
+    var isChange = true;
+
+    var tooltip = d3.select("#tooltip");
+    var infobox = d3.select("#info-box")
+
     d3.json("data/countries-50m.json")
         .then((world)=>{
-
-            var tooltip = d3.select("#tooltip");
 
             group.selectAll("path")
                 .data(topojson.feature(world, world.objects.countries).features)
@@ -89,30 +94,65 @@ function createMap(group, countriesMap){
                     };
                 })
                 .on("mousemove", (d,i,ns)=>{
+
                     country = countriesMap[d.id];
+
                     d3.select("body")
                         .append(()=>tooltip.node()) // appends need function returning a node
                         .style("left", (d3.event.pageX + TOOLTIP_X) + "px")
                         .style("top", (d3.event.pageY + TOOLTIP_Y) + "px");
-                    
-                    long_text = MISSING_COUNTRY_MSG;
-                    short_text = MISSING_COUNTRY_MSG;
 
-                    if (country){
-                        long_text = country.long;
-                        short_text = country.short;
+                    if(isChange){
 
-                        flag = flags[country["iso_a3"]];
-                        if(flag) d3.select("#info-box-flag").attr("src", "https://upload.wikimedia.org/wikipedia/" + flag);
+                        d3.select("body")
+                            .append(()=>infobox.node());
+                        
+                        long_text = MISSING_COUNTRY_MSG;
+                        short_text = MISSING_COUNTRY_MSG;
+
+                        if (country){
+                            long_text = country.long;
+                            short_text = country.short;
+
+                            flag = flags[country["iso_a3"]];
+                            if(flag) d3.select("#info-box-flag").attr("src", "https://upload.wikimedia.org/wikipedia/" + flag);
+
+                            d3.select("#info-box-long-gen").text(country.long_gender);
+                            d3.select("#info-box-short-gen").text(country.short_gender);
+                        }
+
+                        d3.select("#info-box-long").text(long_text);
+                        d3.select("#info-box-short").text(short_text);
+                        d3.select("#tooltip-long").text(long_text);
+                        d3.select("#tooltip-short").text(short_text);
+
+                        isChange = false;
                     }
-
-                    d3.select("#tooltip-long").text(long_text);
-                    d3.select("#tooltip-short").text(short_text);
-
                     
                 })
                 .on("mouseout", (d,i,ns)=>{
+                    if (!isSelected) infobox.remove();
                     tooltip.remove();
+                })
+                .on("click", (d,i,ns)=>{
+
+                    isChange = true;
+
+                    if (isSelected && d.id == selectedCountry){
+                        isSelected = false;
+                        d3.select("#selected-country")
+                            .attr("stroke", "none")
+                            .attr("filter", null);     
+                    }else if (d != selectedCountry){
+                        selectedCountry = d.id;
+                        d3.select("#selected-country")
+                            .attr("fill", "none") // required so actual vector can be clicked on
+                            .attr("stroke", "black")
+                            .attr("d", (ns[i]).getAttribute("d"))
+                            .attr("filter", "url(#softGlow)");
+                        isSelected = true;
+                    }
+
                 })
         });
 
@@ -139,6 +179,7 @@ function main(){
         .on("zoom", ()=>{
             longMapGroup.attr("transform", d3.event.transform);
             shortMapGroup.attr("transform", d3.event.transform);
+            d3.select("#selected-country").attr("transform", d3.event.transform);
         });
     svg.call(zoom);
 

@@ -25,14 +25,48 @@
             </div>
         </header>
         <div id="info-box">
-            <img id="info-box-flag" width="100"/>
-            <div>Text</div>
+            <div>
+                <img id="info-box-flag" width="200px"/>
+            </div>
+            <div>
+                <b>Official long form: </b><span id="info-box-long"></span> 
+                (<i><span id="info-box-long-gen"></span></i>)</div>
+            <div>
+                <b>Official short form: </b><span id="info-box-short"></span>
+                (<i><span id="info-box-short-gen"></span></i>)</div>
+            </div>
         </div>
         <div id="map-div">
             <svg id="map">
+
+                <defs>
+                    <filter id="softGlow" height="300%" width="300%" x="-75%" y="-75%">
+                        <!-- Thicken out the original shape -->
+                        <feMorphology operator="dilate" radius="4" in="SourceAlpha" result="thicken" />
+                
+                        <!-- Use a gaussian blur to create the soft blurriness of the glow -->
+                        <feGaussianBlur in="thicken" stdDeviation="10" result="blurred" />
+                
+                        <!-- Change the colour -->
+                        <feFlood flood-color="rgb(0,186,255)" result="glowColor" />
+                
+                        <!-- Color in the glows -->
+                        <feComposite in="glowColor" in2="blurred" operator="in" result="softGlow_colored" />
+                
+                        <!--	Layer the effects together -->
+                        <feMerge>
+                            <feMergeNode in="softGlow_colored"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
                 <g id="map-group">
                     <g id="long-map"></g>
                     <g id="short-map"></g>
+
+                    <!-- for glowing effect, moves on top of the country vector-->
+                    <path id="selected-country"></path>
                 </g>
             </svg>
         </div>
