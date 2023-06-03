@@ -1,5 +1,6 @@
 #header{
     position: absolute;
+    pointer-events: none;
 }
 
 #tooltip{

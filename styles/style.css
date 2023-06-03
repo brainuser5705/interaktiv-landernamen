@@ -6,7 +6,6 @@ body{
     height: 300px;
     width: 100%;
     background-image: linear-gradient( #dbdbdb , #dbdbdb00);
-    pointer-events: none;
     text-align: center;
 }
 

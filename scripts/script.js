@@ -134,6 +134,7 @@ function drawInfoBox(d, countriesMap){
             .append(()=>infobox.node());
 
         infobox.node().style.backgroundColor = color + ALPHA;
+        
     
         d3.select("#info-box-iso").text(iso);
         d3.select("#info-box-iso-a2").text(iso_a2);
@@ -198,7 +199,8 @@ function createMap(group, countriesMap){
                         d3.select("#selected-country")
                             .attr("stroke", "none")
                             .attr("filter", null);
-                        isSelected = false;     
+                        isSelected = false;
+                        d3.select(infobox.node()).style("pointer-events", "none");     
                     }else if (d != selectedCountry){
                         selectedCountry = d.id;
                         d3.select("#selected-country")
@@ -208,6 +210,7 @@ function createMap(group, countriesMap){
                             .attr("d", (ns[i]).getAttribute("d"))
                             .attr("filter", "url(#softGlow)");
                         isSelected = true;
+                        d3.select(infobox.node()).style("pointer-events", "all");
                     }
                     isChange = true;
                     drawInfoBox(d, countriesMap);
