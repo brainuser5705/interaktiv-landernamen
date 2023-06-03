@@ -2,10 +2,10 @@
 
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <link rel="stylesheet" href="styles/functional.css">
         <link rel="stylesheet" href="styles/style.css">
-    </head>
-
     <body>
         <header>
             <div>Interactive Country Names</div>
@@ -24,31 +24,52 @@
                 <canvas width="15px" height="15px" id="no-country-color"></canvas> Country is not found.
             </div>
         </header>
+
+        <div id="collapse-buttons">
+            <button>Help</button>
+        </div>
+
         <div id="info-box">
-            <div>
+            <div id="info-box-header">
                 <img id="info-box-flag" width="200px"/>
+                <div id="info-box-isos">
+                    <div>ISO 3166-1: <span id="info-box-iso"></span></div> 
+                    <div>ISO 3166-1 a2: <span id="info-box-iso-a2"></span></div>
+                    <div>ISO 3166-1 a3: <span id="info-box-iso-a3"></span></div>
+                </div>
             </div>
-            <div>
-                <div id="info-box-iso"></div>
-                <div id="info-box-iso-a2"></div>
-                <div id="info-box-iso-a3"></div>
-            </div>
-            <div>
-                <b>Official long form: </b><span id="info-box-long"></span> 
-                (<i><span id="info-box-long-gen"></span></i>)</div>
-            <div>
-                <b>Official short form: </b><span id="info-box-short"></span>
-                (<i><span id="info-box-short-gen"></span></i>)
-            </div>
-            <div>
-                <b>Capital: </b><span id="info-box-capital"></span>
-            </div>
-            <div>
-                <b>Nationals: </b>
-                    <ul>
-                        <li><i>Masculine:</i> <span id="info-box-nat-m"></span></li>
-                        <li><i>Feminine:</i> <span id="info-box-nat-f"></span></li>
-                    </ul>
+            <div id="info-box-body" class="container text-left">
+                <!-- <div class="row text-center">
+                    <div class="col col-3"></div>
+                    <div class="col">Deutsch</div>
+                    <div class="col">English</div>
+                </div> -->
+                <div class="row mt-1">
+                    <div class="info-box-label col-3 px-0 py-1"><b>Official long form: </b></div>
+                    <div class="col px-1 py-1"><span id="info-box-long"></span> <i><span id="info-box-long-gen"></span></i></div>
+                    <div class="col px-1 py-1"><span id="info-box-long-en" lang="en"></span></div>
+                </div>
+                <div class="row mt-1">
+                    <div class="info-box-label col-3 px-0 py-1"><b>Official short form: </b></div>
+                    <div class="col px-1 py-1"><span id="info-box-short"></span> <i><span id="info-box-short-gen"></span></i></div>
+                    <div class="col px-1 py-1"><span id="info-box-short-en" lang="en"></span></div>
+                </div>
+                <div class="row mt-1">
+                    <div class="info-box-label col-3 px-0 py-1"><b>Capital: </b></div>
+                    <div class="col px-1 py-1"><span id="info-box-capital"></span></div>
+                    <div class="col px-1 py-1"><span id="info-box-capital-en" lang="en"></span></div>
+                </div>
+                <div class="row mt-1">
+                    <div class="info-box-label col-3 px-0 py-1"><b>Nationals: </b></div>
+                    <div class="col px-1 py-1">
+                        <div><span id="info-box-nat-m"> </span> <span class="gender">m.</span></div>
+                        <div><span id="info-box-nat-f"> </span> <span class="gender">f.</span></div>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="info-box-label col-3 px-0 py-1"><b>Nationality: </b></div>
+                    <div class="col px-1 py-1" id="info-box-nationality"></div>
+                </div>
             </div>
         </div>
             
@@ -97,6 +118,7 @@
         </div>
         <script src="https://d3js.org/d3.v5.min.js"></script>
         <script src="https://unpkg.com/topojson@3"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
         <script src="scripts/script.js"></script>
 
     </body>

@@ -19,7 +19,14 @@ const COLOR_MAP = {
     "no-country": "#030303"
 };
 
-const ALPHA = "B3";
+const GENDER_MAP = {
+    "feminine": "f.",
+    "masculine": "m.",
+    "neuter": "n.",
+    "plural": "pl."
+}
+
+const ALPHA = "CC";
 
 var flags;
 fetch("/data/flag_svgs.json")
@@ -78,12 +85,16 @@ function drawInfoBox(d, countriesMap){
 
 
     long_text = MISSING_COUNTRY_MSG;
+    long_text_en = "";
     short_text = MISSING_COUNTRY_MSG;
+    short_text_en = "";
     long_gender = "";
     short_gender = "";
     capital = "";
+    capital_en = "";
     national_m = "";
     national_f = "";
+    nationality = "";
     color = COLOR_MAP["no-country"];
 
     if (country){
@@ -93,19 +104,23 @@ function drawInfoBox(d, countriesMap){
         var iso_a3 = country.iso_a3;
 
         long_text = country.long;
+        long_text_en = country.long_en;
         short_text = country.short;
-        long_gender = country.long_gender;
-        short_gender = country.short_gender;
+        short_text_en = country.short_en;
+        long_gender = GENDER_MAP[country.long_gender];
+        short_gender = GENDER_MAP[country.short_gender];
 
-        if (long_gender == "feminine" || long_gender == "plural"){
+        if (long_gender == GENDER_MAP["feminine"] || long_gender == GENDER_MAP["plural"]){
             long_text = "die " + long_text;
-        } else if (long_gender == "masculine"){
+        } else if (long_gender == GENDER_MAP["masculine"]){
             long_text = "der " + long_text;
         }
 
         capital = country.capital;
+        capital_en = country.capital_en;
         national_m = country.national_m;
         national_f = country.national_f;
+        nationality = country.nationality;
 
         var flag = flags[country["iso_a3"]];
         flag = flag ? "https://upload.wikimedia.org/wikipedia/" + flag : "";
@@ -125,12 +140,16 @@ function drawInfoBox(d, countriesMap){
         d3.select("#info-box-iso-a3").text(iso_a3);
 
         d3.select("#info-box-long").text(long_text);
+        d3.select("#info-box-long-en").text(long_text_en);
         d3.select("#info-box-short").text(short_text);
+        d3.select("#info-box-short-en").text(short_text_en);
         d3.select("#info-box-long-gen").text(long_gender);
         d3.select("#info-box-short-gen").text(short_gender);
         d3.select("#info-box-capital").text(capital);
+        d3.select("#info-box-capital-en").text(capital_en);
         d3.select("#info-box-nat-m").text(national_m);
         d3.select("#info-box-nat-f").text(national_f);
+        d3.select("#info-box-nationality").text(nationality);
         d3.select("#info-box-flag").attr("src", flag);
         
         if (isSelected) isChange = false;
@@ -204,13 +223,16 @@ function main(){
         document.getElementById(key + "-color").style.backgroundColor = color;
     }
 
-    var svg = d3.select("#map")
+    var svg = d3.select("#map");
         //.attr("width", WIDTH[0].clientWidth)
         //.attr("height", HEIGHT); // -(HEADING_HEIGHT[0]).clientHeight);
 
     var longMapGroup = d3.select("#long-map").call(createMap, createCountriesMap("long"));
     var shortMapGroup = d3.select("#short-map").call(createMap, createCountriesMap("short"));
     toggle();
+
+    // info box is initially hidden on load
+    d3.select("#info-box").remove();
 
     var zoom = d3.zoom()
         .scaleExtent([1,20])

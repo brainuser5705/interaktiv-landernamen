@@ -24,5 +24,10 @@ html, body, #map-div{
     padding: 1em;
     margin: 1em;
     border: 2px solid;
-    width: 300px;
+    width: 400px;
+}
+
+#collapse-buttons{
+    position: absolute;
+    right: 10px;
 }

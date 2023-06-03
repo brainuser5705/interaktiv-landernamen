@@ -6,3 +6,35 @@ body{
     position: absolute;
     bottom: 10px;
 }
+
+#info-box{
+    font-size: 0.9em;
+}
+
+span:lang(en){
+    font-style: italic;
+}
+
+.info-box-label{
+    font-size: 0.85em;
+}
+
+#info-box-flag{
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+
+#info-box-isos span{
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+#info-box-body{
+    clear: left;
+}
+
+span[id$="gen"], .gender{
+    font-weight: bold;
+    font-size: 0.8em;
+}
