@@ -32,8 +32,56 @@
             
         </div>
 
-        <div id="collapse-buttons">
-            <button>Help</button>
+        <div id="extra-section">
+            <div id="extra-section-buttons">
+                <button onclick="document.getElementById('help-dialog').showModal()">Help</button>
+                <button onclick="document.getElementById('about-dialog').showModal()">About</button> <br>
+                <a href="https://github.com/brainuser5705/interaktiv-landernamen" target="_blank"><img src="github-mark/github-mark.svg" height="30px"></a>
+            </div>
+            <dialog id="help-dialog">
+                <h1>Welcome to Interactive Country Names!</h1>
+                <h4 style="color:crimson">It is still in active development, so more features will be added!</h4>
+                <p>
+                    <b>Here's how to use it:</b>
+                    <ul>
+                        <li><b>Zoom and pan</b> the map.</li>
+                        <li>Click on a country to <b>lock the <i>Infobox</i></b>. You can <b>still click on other country</b> in lock mode.</li>
+                        <li><b>Exit out of lock mode</b> by clicking on the selected country.</li>
+                    </ul>
+                </p>
+                <p>
+                    <b>Note:</b>
+                    This was developed on a 1920 X 1080 screen resolution. Styling and UI is not guarantee to work for other resolutions.
+                </p>
+                <form method="dialog">
+                        <button>Alrighty!</button>
+                </form>
+            </dialog>
+            <dialog id="about-dialog">
+                <h1>About Interactive Country Names</h1>
+
+                <h4>Why?</h4>
+                <p>
+                <i>Interactive Country Names</i> is an interactive tool to view official country names in different languages.
+                The idea came up while I was learning German and encountered <i>grammatical genders</i> for the first time.
+                </p>
+
+                <h4>Grammatical Gender</h4>
+                <p>
+                Essentially in German (and other languages like Spanishand French), countries have a grammatical gender
+                and as a result, their names are prefixed with a "gendered" article. For example, Switzerland is feminine and would be
+                prefixed with the feminine definite article <i>"die"</i>. Check out the map and see if you can find out what
+                the definite articles are for the masculine gender, neutral gender and plural.
+                </p>
+
+                <p>
+                    Source code, raw data, and research notes can be found in the <a href="https://github.com/brainuser5705/interaktiv-landernamen">Github repository</a>.
+                </p>
+                
+                <form method="dialog">
+                        <button>Alrighty!</button>
+                </form>
+            </dialog>
         </div>
 
         <div id="info-box">
@@ -115,8 +163,8 @@
             </svg>
         </div>
 
-        <div id="about-section">
-            Created by Ashley Liew
+        <div id="credit-section">
+            Developed by <a href="https://ashleyliew.com" target="_blank">Ashley Liew <i>(brainuser5705)</i></a> - 2023
         </div>
 
         <div id="tooltip">

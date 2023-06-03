@@ -221,6 +221,10 @@ function createMap(group, countriesMap){
 
 function main(){
 
+    if(document.cookie == "") // no cookies
+        document.getElementById('help-dialog').showModal();
+    document.cookie="access=true;";
+
     // set the color key canvas elements
     for (let [key, color] of Object.entries(COLOR_MAP)){
         document.getElementById(key + "-color").style.backgroundColor = color;

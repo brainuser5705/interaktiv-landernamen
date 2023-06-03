@@ -14,9 +14,28 @@ body{
     pointer-events: all;
 }
 
-#about-section{
+#credit-section{
     position: absolute;
     bottom: 10px;
+    margin: 1em;
+}
+
+#extra-section{
+    position: absolute;
+    right: 10px;
+    margin: 1em;  
+}
+
+#extra-section-buttons {
+    text-align: right;
+}
+
+#extra-section-buttons * {
+    margin: 5px 2px;
+}
+
+#about-dialog{
+    max-width:50%;
 }
 
 #info-box{
