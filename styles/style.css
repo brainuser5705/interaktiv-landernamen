@@ -2,6 +2,13 @@ body{
     background-color:#9bbff4;
 }
 
+#header{
+    height: 200px;
+    width: 100%;
+    background-image: linear-gradient( #dbdbdb , #dbdbdb00);
+    text-align: center;
+}
+
 #about-section{
     position: absolute;
     bottom: 10px;
@@ -37,4 +44,8 @@ span:lang(en){
 span[id$="gen"], .gender{
     font-weight: bold;
     font-size: 0.8em;
+}
+
+canvas[id$="color"]{
+    margin-left: 1em;
 }

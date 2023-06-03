@@ -26,7 +26,7 @@ const GENDER_MAP = {
     "plural": "pl."
 }
 
-const ALPHA = "CC";
+const ALPHA = "E6";
 
 var flags;
 fetch("/data/flag_svgs.json")

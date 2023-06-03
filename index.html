@@ -7,15 +7,9 @@
         <link rel="stylesheet" href="styles/functional.css">
         <link rel="stylesheet" href="styles/style.css">
     <body>
-        <header>
-            <div>Interactive Country Names</div>
-            <div>Grammatical genders for countries in 
-                <select name="lang" id="lang-select">
-                    <option value="de">German (de)</option>
-                </select>
-            </div>
-            <button onclick="toggle()">Click here for <span id="toggle"></span> form genders</button>
-            <div>
+        <div id="header">
+            <div class="fs-1">Interactive Country Names</div>
+            <div id="color-key">
                 <canvas width="15px" height="15px" id="feminine-color"></canvas> Feminine
                 <canvas width="15px" height="15px" id="masculine-color"></canvas> Masculine
                 <canvas width="15px" height="15px" id="neuter-color"></canvas> Neuter
@@ -23,7 +17,13 @@
                 <canvas width="15px" height="15px" id="no-gender-color"></canvas> No gender data
                 <canvas width="15px" height="15px" id="no-country-color"></canvas> Country is not found.
             </div>
-        </header>
+            <div class="">Grammatical genders for countries in 
+                <select name="lang" id="lang-select">
+                    <option value="de">German (de)</option>
+                </select>
+                <button class="mt-3" onclick="toggle()">Click here for <span id="toggle"></span> form genders</button>
+            </div>
+        </div>
 
         <div id="collapse-buttons">
             <button>Help</button>
