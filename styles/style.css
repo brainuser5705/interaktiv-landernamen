@@ -1,5 +1,6 @@
 body{
     background-color:#9bbff4;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 #header{
@@ -9,7 +10,7 @@ body{
     text-align: center;
 }
 
-#header-select{
+.header-select{
     pointer-events: all;
 }
 
@@ -46,6 +47,7 @@ span:lang(en){
 }
 
 span[id$="gen"], .gender{
+    font-style: italic;
     font-weight: bold;
     font-size: 0.8em;
 }

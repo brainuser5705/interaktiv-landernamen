@@ -26,6 +26,7 @@ html, body, #map-div{
     margin: 1em;
     border: 2px solid;
     width: 400px;
+    pointer-events: none;
 }
 
 #collapse-buttons{
