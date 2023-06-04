@@ -18,7 +18,8 @@ Taken from documents as well as monolingual reference works and atlases.
 The German designations correspond to the official ones specified by the Foreign Office
 Use.
 ```
-
+- The links to flag icons in the dataset were scraped from the same Wikipedia entry to get the country names, but they were 32*32 pixels (i think) resolution so I ended up using data taken from [this Country flags SVGs Github repository](https://github.com/ronatskiy/country-flags-svg).
+- 
 ## Note about Country/Territories Standardization
 
 As I have learned while researching for this project, it is impossible to have a single source of truth for a list of the world's countries/terriorities let alone the geographical borders between them. Political disputes of the sovereignty of nations, ownership of territories and borders means that there doesn't exist a world map that every country can agree upon. Additionally, open-source providers of such geospatial data often [differ from each other](https://www.geoboundaries.org/geoContrast.html?country=BHR&mainSource=geoBoundaries+%28Open%29&comparisonSource=ESRI&mainLevel=1&comparisonLevel=1) e.g. their exact placement of boundary lines. 
