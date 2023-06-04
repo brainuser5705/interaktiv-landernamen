@@ -6,8 +6,8 @@ The original raw data set has been uploaded onto [Kaggle](https://www.kaggle.com
 
 - The list of countries/territories in the data set were scraped from [this Wikipedia entry](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) and no additional countries/territories were added afterwards.
 - The main German source ([Auswaertiges Amt](https://www.auswaertiges-amt.de/de/service/terminologie/-/215252) - German Federal Foreign Office) did not provide official names, captials and/or grammatical genders for all countries and territories. The grammatical genders were confirmed with Wikitionary ([de](https://de.wiktionary.org/wiki) and [en](https://en.wiktionary.org) version) for both the long and short name forms. Missing captials were taken from Wikipedia entries ([de](https://de.wikipedia.org/wiki/Liste_der_Hauptst%C3%A4dte_der_Erde), [en](https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_and_their_capitals_in_native_languages)).
-- As Auswartiges Amt did not cover all the terriorities, the missing data is sourced from [Destatis](https://www.destatis.de/DE/Methoden/Klassifikationen/Staat-Gebietsystematik/Staatsangehoerigkeitsgebietsschluessel_pdf.pdf?__blob=publicationFile)
-- Here's the translation for where Auswaertiges got its information:
+- As Auswartiges Amt did not cover all the territorities, the missing data is sourced from [Destatis](https://www.destatis.de/DE/Methoden/Klassifikationen/Staat-Gebietsystematik/Staatsangehoerigkeitsgebietsschluessel_pdf.pdf?__blob=publicationFile)
+- Here's the translation for where Auswaertiges Amt got its information:
 ```
 The English, French and Spanish state designations as well as the
 Personal designations and the adjectival derivations of the independent states are
